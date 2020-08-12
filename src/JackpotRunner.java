@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class JackpotRunner {
-    private static List<Integer> numbersAppearedInSection1 = new ArrayList<Integer>();
-    private static List<Integer> numbersAppearedInSection2 = new ArrayList<Integer>();
+    private static List<Integer> numbersHavingAppearedInSection1 = new ArrayList<Integer>();
+    private static List<Integer> numbersHavingAppearedInSection2 = new ArrayList<Integer>();
 
-    // TODO: remove repeated numbers in all run
+    // TODO: remove repeated numbers in last two runs
     public static void main(String[] args) {
         int maxRunTimes = 8;
         for (int i = 0; i < maxRunTimes; i++)
@@ -20,21 +20,18 @@ public class JackpotRunner {
         outputChosenNumbers(numbersInSection1, numbersInSection2);
     }
 
-    private static void init(List<Integer> numbersInSection1, List<Integer> numbersInSection2) {
-        numbersInSection1.clear();
-        numbersInSection2.clear();
-    }
-
     private static void chooseNumbers(int section, List<Integer> chosenNumbers) {
         int chosenNumber;
         int maxLotteryNumber = (section == 1) ? 38 : 8;
         int maxQuantityInSection = (section == 1) ? 6 : 1;
-        List<Integer> appearedNumbers = (section == 1) ? numbersAppearedInSection1 : numbersAppearedInSection2;
+        List<Integer> appearedNumbers = (section == 1) ? numbersHavingAppearedInSection1 : numbersHavingAppearedInSection2;
         for (int i = 0; i < maxQuantityInSection; i++) {
             do {
                 chosenNumber = (int) (Math.random() * maxLotteryNumber) + 1;
-            } while(appearedNumbers.size() <= maxLotteryNumber && appearedNumbers.contains(chosenNumber));
+            } while(chosenNumbers.contains(chosenNumber) || appearedNumbers.size() < maxLotteryNumber && appearedNumbers.contains(chosenNumber));
             chosenNumbers.add(chosenNumber);
+            if (!appearedNumbers.contains(chosenNumber))
+                appearedNumbers.add(chosenNumber);
         }
     }
 
