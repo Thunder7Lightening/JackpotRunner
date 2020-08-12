@@ -4,22 +4,25 @@ public class JackpotRunner {
     private static List<Integer> numbersAppearedInSection1 = new ArrayList<Integer>();
     private static List<Integer> numbersAppearedInSection2 = new ArrayList<Integer>();
 
+    // TODO: remove repeated numbers in all run
     public static void main(String[] args) {
-        run();
-//        test();
+        int maxRunTimes = 8;
+        for (int i = 0; i < maxRunTimes; i++)
+            run();
     }
 
-    static void run() {
+    private static void run() {
         List<Integer> numbersInSection1 = new ArrayList<Integer>();
         List<Integer> numbersInSection2 = new ArrayList<Integer>();
-        for (int i = 0; i < 8; i++) {
-            numbersInSection1.clear();
-            numbersInSection2.clear();
 
-            chooseNumbers(1, numbersInSection1);
-            chooseNumbers(2, numbersInSection2);
-            outputChosenNumbers(numbersInSection1, numbersInSection2);
-        }
+        chooseNumbers(1, numbersInSection1);
+        chooseNumbers(2, numbersInSection2);
+        outputChosenNumbers(numbersInSection1, numbersInSection2);
+    }
+
+    private static void init(List<Integer> numbersInSection1, List<Integer> numbersInSection2) {
+        numbersInSection1.clear();
+        numbersInSection2.clear();
     }
 
     private static void chooseNumbers(int section, List<Integer> chosenNumbers) {
@@ -30,7 +33,7 @@ public class JackpotRunner {
         for (int i = 0; i < maxQuantityInSection; i++) {
             do {
                 chosenNumber = (int) (Math.random() * maxLotteryNumber) + 1;
-            } while(appearedNumbers.contains(chosenNumber));
+            } while(appearedNumbers.size() <= maxLotteryNumber && appearedNumbers.contains(chosenNumber));
             chosenNumbers.add(chosenNumber);
         }
     }
@@ -44,14 +47,4 @@ public class JackpotRunner {
         System.out.print(numbersInSection2);
         System.out.println();
     }
-
-    //    static void test() {
-//        int number = 12;
-//        List<Integer> appearedNumbers = new ArrayList<Integer>();
-//        appearedNumbers.add(number);
-//        if (appearedNumbers.contains(11))
-//            System.out.println("Contained");
-//        else
-//            System.out.println("Not Contained");
-//    }
 }
